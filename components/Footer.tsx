@@ -28,7 +28,7 @@ const Footer = ({ data }: { data: TemplateType | null }) => {
           target="_blank"
           href="https://www.mathys-cognefoucault.fr/"
         >
-          Mathys' Website
+          Mathys&apos; Website
         </a>
       </h1>
     </footer>
