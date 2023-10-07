@@ -17,6 +17,8 @@ export default function RootLayout({
   const [data, setData] = useState<TemplateType | null>(null);
 
   useEffect(() => {
+    console.log("entered");
+
     getTemplate()
       .then((e) => setData(e[0]))
       .then(() => {

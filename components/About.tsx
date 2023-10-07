@@ -42,10 +42,10 @@ const About = ({ data }: { data: TemplateType | null }) => {
     >
       <div
         ref={ref}
-        className={` w-full  h-[170px] flex flex-col justify-end items-start ${poiret.className} `}
+        className={` w-full  h-[170px] flex flex-col justify-end md:items-start items-center ${poiret.className} `}
       >
         <motion.h1
-          className="leading-[13px] origin-bottom-left text-sm "
+          className="leading-[13px] md:origin-bottom-left origin-bottom md:text-sm text-[10px] "
           style={{ scale: ySpringy }}
         >
           About
@@ -74,7 +74,7 @@ const About = ({ data }: { data: TemplateType | null }) => {
               <h1 className="leading-5">
                 {data?.aboutContent}{" "}
                 <span
-                  className="italic text-yellow-200 cursor-pointer"
+                  className="italic text-yellow-200 cursor-pointer select-none"
                   id="clickable"
                 >
                   {data?.aboutContentSpan}

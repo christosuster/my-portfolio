@@ -46,10 +46,10 @@ const Work = () => {
       <div className="px-20">
         <div
           ref={ref}
-          className={` w-full  h-[170px] flex flex-col justify-end items-start  ${poiret.className} `}
+          className={` w-full  h-[170px] flex flex-col justify-end md:items-start items-center  ${poiret.className} `}
         >
           <motion.h1
-            className="leading-[13px] origin-bottom-left text-sm "
+            className="leading-[13px] md:origin-bottom-left origin-bottom md:text-sm text-[10px] "
             style={{ scale: ySpringy }}
           >
             Work
