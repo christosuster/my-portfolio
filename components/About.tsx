@@ -7,7 +7,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { poiret } from "@/app/(general)/layout";
+import { poiret } from "@/utils/fonts";
 import { Tooltip } from "react-tooltip";
 import { TemplateType } from "@/types/TemplateType";
 

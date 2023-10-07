@@ -1,4 +1,4 @@
-import { poiret } from "@/app/(general)/layout";
+import { poiret } from "@/utils/fonts";
 import { TemplateType } from "@/types/TemplateType";
 import {
   useInView,

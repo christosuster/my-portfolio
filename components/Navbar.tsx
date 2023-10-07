@@ -1,5 +1,5 @@
 "use client";
-import { comfortaa, poiret } from "@/app/(general)/layout";
+import { comfortaa, poiret } from "@/utils/fonts";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";

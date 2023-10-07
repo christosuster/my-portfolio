@@ -1,45 +1,12 @@
 "use client";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
-import {
-  Montserrat,
-  Poiret_One,
-  Comfortaa,
-  Zen_Loop,
-  Alumni_Sans_Pinstripe,
-} from "next/font/google";
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
 import { motion } from "framer-motion";
 import { getTemplate } from "@/sanity/sanity-utils";
 import { TemplateType } from "@/types/TemplateType";
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600"],
-});
-
-export const zen = Zen_Loop({
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-export const alumni = Alumni_Sans_Pinstripe({
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-export const poiret = Poiret_One({
-  subsets: ["latin-ext"],
-  weight: "400",
-});
-
-export const comfortaa = Comfortaa({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-export const dataContext = createContext<TemplateType | null>(null);
+import { dataContext } from "@/utils/context";
 
 export default function RootLayout({
   children,

@@ -1,4 +1,3 @@
-import { poiret } from "@/app/(general)/layout";
 import {
   useScroll,
   useSpring,
@@ -14,6 +13,7 @@ import { ImArrowUpRight2 } from "react-icons/im";
 import { HiOutlineArrowTopRightOnSquare } from "react-icons/hi2";
 import { getWork } from "@/sanity/sanity-utils";
 import { WorkType } from "@/types/WorkType";
+import { poiret } from "@/utils/fonts";
 
 const Work = () => {
   const [work, setWork] = useState<WorkType[] | null>(null);

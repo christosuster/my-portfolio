@@ -1,10 +1,4 @@
-import {
-  alumni,
-  comfortaa,
-  dataContext,
-  poiret,
-  zen,
-} from "@/app/(general)/layout";
+import { alumni, comfortaa, poiret, zen } from "@/utils/fonts";
 import { TemplateType } from "@/types/TemplateType";
 import { motion, useInView } from "framer-motion";
 import React, { useContext, useRef } from "react";

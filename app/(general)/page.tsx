@@ -2,7 +2,8 @@
 import About from "@/components/About";
 import Home from "@/components/Home";
 import Work from "@/components/Work";
-import { comfortaa, dataContext } from "./layout";
+import { comfortaa } from "@/utils/fonts";
+import { dataContext } from "@/utils/context";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { useContext } from "react";
