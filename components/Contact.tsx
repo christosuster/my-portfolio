@@ -45,13 +45,14 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
       });
       const result = await response.json();
 
+      console.log(result);
+
       setName("");
       setEmail("");
       setSubject("");
       setMessage("");
 
       if (result.success) {
-        errorRef.current?.classList.remove("visible");
         errorRef.current?.classList.add("invisible");
         buttonRef.current.innerHTML = "Email Sent!";
         setTimeout(() => {
