@@ -8,8 +8,10 @@ import {
   motion,
 } from "framer-motion";
 import React, { FormEvent, ReactHTMLElement, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Contact = ({ data }: { data: TemplateType | null }) => {
+  const router = useRouter();
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
@@ -56,9 +58,10 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
           buttonRef.current.innerHTML = "Submit";
           buttonRef.current;
         }, 4000);
-        setSending(false);
       }
+      setSending(false);
     }
+    router.push("#contact");
   };
 
   const formInView = useInView(contactForm, { once: true });
