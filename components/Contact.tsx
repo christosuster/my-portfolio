@@ -7,33 +7,60 @@ import {
   useTransform,
   motion,
 } from "framer-motion";
-import React, { FormEvent, useRef, useState } from "react";
+import React, { FormEvent, ReactHTMLElement, useRef, useState } from "react";
 
 const Contact = ({ data }: { data: TemplateType | null }) => {
   const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>();
-  const [subject, setSubject] = useState<string>();
-  const [message, setMessage] = useState<string>();
+  const [email, setEmail] = useState<string>("");
+  const [subject, setSubject] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+  const [sending, setSending] = useState(false);
+
+  const ref = useRef(null);
+  const contactForm = useRef<any>(null);
+  const errorRef = useRef<any>(null);
+  const buttonRef = useRef<any>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (name == "" || email == "" || subject == "" || message == "") {
+      errorRef.current?.classList.remove("invisible");
+    } else {
+      setSending(true);
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_FORM_KEY,
+          name: name,
+          email: email,
+          subject: subject,
+          message: message,
+        }),
+      });
+      const result = await response.json();
 
-    const result = await fetch("/api/mail", {
-      method: "POST",
-      body: JSON.stringify({
-        name,
-        email,
-        subject,
-        message,
-      }),
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+
+      if (result.success) {
+        errorRef.current?.classList.remove("visible");
+        errorRef.current?.classList.add("invisible");
+        buttonRef.current.innerHTML = "Email Sent!";
+        setTimeout(() => {
+          buttonRef.current.innerHTML = "Submit";
+          buttonRef.current;
+        }, 4000);
+        setSending(false);
+      }
+    }
   };
 
-  const ref = useRef(null);
-  const contactForm = useRef(null);
   const formInView = useInView(contactForm, { once: true });
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -73,6 +100,12 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
         className="bg-theme h-[2px] border-transparent w-full origin-right"
       />
       <div className="my-24">
+        <h1
+          ref={errorRef}
+          className="invisible text-red-500 text-center animate-bounce"
+        >
+          PLEASE FILL IN ALL THE FIELDS
+        </h1>
         <form
           ref={contactForm}
           style={{
@@ -80,8 +113,13 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             transform: formInView ? "none" : "translateY(200px)",
             transition: "linear 0.5s",
           }}
-          className="flex flex-col justify-center items-center"
+          className="flex flex-col justify-center items-center *>"
         >
+          <input
+            type="hidden"
+            name="from_name"
+            value="New Portfolio Email"
+          ></input>
           <input
             type="text"
             name="name"
@@ -124,11 +162,13 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             onChange={(e) => {
               setMessage(e.target.value);
             }}
-            className="placeholder-gray-500 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors h-48 "
+            className="placeholder-gray-500 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors h-48"
           />
           <button
+            disabled={sending ? true : false}
+            ref={buttonRef}
             onClick={handleSubmit}
-            className="transition-colors font-bold text-theme hover:text-black hover:bg-theme rounded-xl py-2 px-4 border-2 border-theme "
+            className=" font-bold text-theme hover:text-black hover:bg-theme rounded-xl py-2 px-4 border-2 border-theme transition-all"
           >
             Submit
           </button>

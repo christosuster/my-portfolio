@@ -52,7 +52,13 @@ const Navbar = () => {
             menuIsOpen ? "flex" : "hidden"
           }`}
         >
-          <Link href={"#home"} className="">
+          <Link
+            href={"#home"}
+            className=""
+            onClick={() => {
+              setMenuIsOpen(false);
+            }}
+          >
             <div className="  border-white grid grid-cols-2 gap-2 items-center group justify-center">
               <div className="justify-items-end grid grid-cols-1 gap-[8px]">
                 <motion.img
