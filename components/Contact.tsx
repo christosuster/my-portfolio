@@ -125,7 +125,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             name="name"
             id="name"
             value={name}
-            placeholder="Name"
+            placeholder="Your Name"
             onChange={(e) => {
               setName(e.target.value);
             }}
@@ -135,7 +135,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             type="email"
             name="email"
             id="email"
-            placeholder="Email"
+            placeholder="Your Email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
