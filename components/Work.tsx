@@ -10,7 +10,6 @@ import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { AiOutlineGithub } from "react-icons/ai";
 import { ImArrowUpRight2 } from "react-icons/im";
-import { HiOutlineArrowTopRightOnSquare } from "react-icons/hi2";
 import { getWork } from "@/sanity/sanity-utils";
 import { WorkType } from "@/types/WorkType";
 import { poiret } from "@/utils/fonts";
@@ -64,10 +63,8 @@ const Work = () => {
       <div className="w-full border-y-2 border-theme my-32 grid grid-cols-1 divide-y-2">
         {work?.map((e, i) => {
           return (
-            <motion.a
+            <motion.div
               key={i}
-              target="_blank"
-              href={e.live}
               whileHover={{
                 backgroundImage: `linear-gradient(0deg,
                 #bb8f06 0%,
@@ -78,8 +75,10 @@ const Work = () => {
                 backgroundPositionY: "-200%",
                 transition: {duration: 0.5},
               }}
-              className="transition-colors border-theme py-5 flex flex-col justify-center items-center lg:flex-row lg:justify-between px-6 lg:px-20 gap-4"
+              className="transition-colors border-theme py-5 flex flex-col justify-center items-center lg:flex-row lg:justify-between px-6 lg:px-20 gap-4 relative"
             >
+              <a target="_blank"
+                 href={e.live} className="absolute w-full h-full top-0 left-0 z-10"></a>
 
                 <div className={` w-full mx-auto relative`}>
 
@@ -114,7 +113,7 @@ const Work = () => {
                     <Link
                       target="_blank"
                       href={e.client}
-                      className="flex justify-center items-center gap-1 leading-[0] mt-4 text-xl  bg-yellow-400/70 drop-shadow-lg text-black rounded-3xl p-2 hover:bg-white transition-all"
+                      className="flex justify-center items-center gap-1 leading-[0] mt-4 text-xl  bg-yellow-400/70 drop-shadow-lg text-black rounded-3xl p-2 hover:bg-white transition-all z-20"
                     >
                       <AiOutlineGithub />
                       Client
@@ -124,7 +123,7 @@ const Work = () => {
                     <Link
                       target="_blank"
                       href={e.server}
-                      className="flex justify-center items-center gap-1 leading-[0] mt-4 text-xl bg-yellow-400/70 drop-shadow-lg text-black rounded-3xl p-2 hover:bg-white transition-all"
+                      className="flex justify-center items-center gap-1 leading-[0] mt-4 text-xl bg-yellow-400/70 drop-shadow-lg text-black rounded-3xl p-2 hover:bg-white transition-all z-20"
                     >
                       <AiOutlineGithub />
                       Server
@@ -133,7 +132,7 @@ const Work = () => {
                 </div>
               </div>
 
-            </motion.a>
+            </motion.div>
           );
         })}
       </div>
