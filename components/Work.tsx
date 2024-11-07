@@ -64,8 +64,10 @@ const Work = () => {
       <div className="w-full border-y-2 border-theme my-32 grid grid-cols-1 divide-y-2">
         {work?.map((e, i) => {
           return (
-            <motion.div
+            <motion.a
               key={i}
+              target="_blank"
+              href={e.live}
               whileHover={{
                 backgroundImage: `linear-gradient(0deg,
                 #bb8f06 0%,
@@ -74,39 +76,37 @@ const Work = () => {
                 #bb8f06 100%,
                 black 100%)`,
                 backgroundPositionY: "-200%",
-                transition: { duration: 0.5 },
+                transition: {duration: 0.5},
               }}
               className="transition-colors border-theme py-5 flex flex-col justify-center items-center lg:flex-row lg:justify-between px-6 lg:px-20 gap-4"
             >
-              <div className={` w-full mx-auto`}>
-                <a
-                  target="_blank"
-                  href={e.live}
-                  className="relative mx-auto w-full"
-                >
-                  <div className="flex w-full items-end justify-center lg:justify-start">
+
+                <div className={` w-full mx-auto relative`}>
+
+                  <div className="flex flex-col w-full items-end lg:justify-start lg:flex-row">
                     <h1
-                      className={`${poiret.className} flex-shrink-0 xl:text-[100px] lg:text-7xl md:text-6xl text-5xl text-left`}
+                      className={`${poiret.className} flex-shrink-0 xl:text-[100px] lg:text-7xl md:text-6xl text-5xl text-center lg:text-left mx-auto lg:mx-0 leading-[1]`}
                     >
                       {e.title}
                     </h1>
                     <h1
-                      className={`${poiret.className} pl-3 lg:pl-6 text-sm lg:text-lg xl:text-xl leading-[1]`}
+                      className={`${poiret.className} pl-3 lg:pl-6 text-sm lg:text-lg xl:text-xl leading-[3] lg:leading-[1] text-center lg:text-left mx-auto lg:mx-0`}
                     >
                       / {e.subtitle}
                     </h1>
                   </div>
 
-                  <ImArrowUpRight2 className="absolute right-0 top-0 text-2xl" />
+                  <ImArrowUpRight2 className="absolute right-0 top-0 text-2xl"/>
 
-                  <h1 className="mx-auto lg:mx-0 max-w-[800px] mt-5 lg:text-xl text-center lg:text-left text-sm !leading-[1.1]">
+                  <h1
+                    className="mx-auto lg:mx-0 max-w-[800px] mt-5 lg:text-xl text-center lg:text-left text-sm !leading-[1.1]">
                     {e.description}
                   </h1>
-                </a>
-              </div>
 
-              <div className="flex flex-col justify-center items-center text-xs lg:items-end lg:w-1/5">
-                <h1 className=" underline underline-offset-4 leading-5 text-right">
+            </div>
+
+          <div className="flex flex-col justify-center items-center text-xs lg:items-end lg:w-1/5">
+            <h1 className=" underline underline-offset-4 leading-5 text-right">
                   {e.workTech}
                 </h1>
                 <div className="flex gap-3">
@@ -114,7 +114,7 @@ const Work = () => {
                     <Link
                       target="_blank"
                       href={e.client}
-                      className="flex justify-center items-center gap-1 leading-[0] mt-4 text-xl  bg-yellow-400/70 drop-shadow-lg text-black rounded-3xl p-2"
+                      className="flex justify-center items-center gap-1 leading-[0] mt-4 text-xl  bg-yellow-400/70 drop-shadow-lg text-black rounded-3xl p-2 hover:bg-white transition-all"
                     >
                       <AiOutlineGithub />
                       Client
@@ -124,7 +124,7 @@ const Work = () => {
                     <Link
                       target="_blank"
                       href={e.server}
-                      className="flex justify-center items-center gap-1 leading-[0] mt-4 text-xl bg-yellow-400/70 drop-shadow-lg text-black rounded-3xl p-2"
+                      className="flex justify-center items-center gap-1 leading-[0] mt-4 text-xl bg-yellow-400/70 drop-shadow-lg text-black rounded-3xl p-2 hover:bg-white transition-all"
                     >
                       <AiOutlineGithub />
                       Server
@@ -132,7 +132,8 @@ const Work = () => {
                   )}
                 </div>
               </div>
-            </motion.div>
+
+            </motion.a>
           );
         })}
       </div>
