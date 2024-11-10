@@ -157,8 +157,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             }}
             className="placeholder-gray-500 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors"
           />
-          <input
-            type="text"
+          <textarea
             name="message"
             id="message"
             placeholder="Message"
@@ -166,7 +165,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             onChange={(e) => {
               setMessage(e.target.value);
             }}
-            className="placeholder-gray-500 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors h-48"
+            className="placeholder-gray-500 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors h-48 resize-none"
           />
           <button
             disabled={sending ? true : false}

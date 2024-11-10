@@ -33,7 +33,7 @@ const Navbar = () => {
   });
 
   return (
-    <div>
+    <div className="z-[9999]">
       {smallScreen && (
         <button
           onClick={() => {
