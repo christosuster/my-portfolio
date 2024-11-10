@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth transition-all bg-black">
       <head>
-        <title>Christos Uster Biswas | Developer</title>
+        <title>Christos Uster Biswas</title>
       </head>
       <body className={`w-full relative`}>
         {loading ? (

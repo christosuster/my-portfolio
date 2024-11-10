@@ -19,7 +19,7 @@ const About = ({ data }: { data: TemplateType | null }) => {
   const skillsInView = useInView(skills, { once: true });
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["end end", "0.1 start"],
+    offset: ["end end", "start start"],
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [3, 10]);
@@ -28,7 +28,7 @@ const About = ({ data }: { data: TemplateType | null }) => {
     damping: 30,
     restDelta: 0.001,
   });
-  const x = useTransform(scrollYProgress, [0, 1], [0.1, 1]);
+  const x = useTransform(scrollYProgress, [0, 1], [0, 1]);
   const xSpringy = useSpring(x, {
     stiffness: 95,
     damping: 30,
@@ -38,11 +38,12 @@ const About = ({ data }: { data: TemplateType | null }) => {
   return (
     <div
       id="about"
-      className="px-20 md:px-20 mt-[200px] text-white w-full overflow-hidden"
+
+      className="px-20 md:px-20 text-white w-full overflow-hidden"
     >
       <div
         ref={ref}
-        className={` w-full  h-[170px] flex flex-col justify-end md:items-start items-center ${poiret.className} `}
+        className={` w-full h-[200px] flex flex-col justify-end md:items-start items-center ${poiret.className} `}
       >
         <motion.h1
           className="leading-[13px] md:origin-bottom-left origin-bottom md:text-sm text-[10px] "

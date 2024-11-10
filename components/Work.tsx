@@ -25,7 +25,7 @@ const Work = () => {
   const workInView = useInView(workRef, { once: false });
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["end end", "0.1 start"],
+    offset: ["end end", "start start"],
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [3, 10]);
@@ -45,7 +45,7 @@ const Work = () => {
       <div className="px-20">
         <div
           ref={ref}
-          className={` w-full  h-[170px] flex flex-col justify-end md:items-start items-center  ${poiret.className} `}
+          className={` w-full  h-[200px] flex flex-col justify-end md:items-start items-center  ${poiret.className} `}
         >
           <motion.h1
             className="leading-[13px] md:origin-bottom-left origin-bottom md:text-sm text-[10px] "

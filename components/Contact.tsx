@@ -68,7 +68,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
   const formInView = useInView(contactForm, { once: true });
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["end end", "0.1 start"],
+    offset: ["end end", "start start"],
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [3, 10]);
@@ -86,11 +86,11 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
   return (
     <div
       id="contact"
-      className="min-h-screen px-6 md:px-20 text-white w-full overflow-hidden"
+      className="min-h-screen px-20 md:px-20 text-white w-full overflow-hidden"
     >
       <div
         ref={ref}
-        className={` w-full  h-[170px] flex flex-col justify-end md:items-start items-center ${poiret.className} `}
+        className={` w-full  h-[200px] flex flex-col justify-end md:items-start items-center ${poiret.className} `}
       >
         <motion.h1
           className="leading-[13px] md:origin-bottom-left origin-bottom md:text-sm text-[10px]"
