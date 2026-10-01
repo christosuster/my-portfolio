@@ -3,10 +3,8 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
-import { motion } from "framer-motion";
-import { getTemplate } from "@/sanity/sanity-utils";
-import { TemplateType } from "@/types/TemplateType";
-import { dataContext } from "@/utils/context";
+import { MotionConfig, motion } from "framer-motion";
+import { spaceGrotesk } from "@/utils/fonts";
 
 export default function RootLayout({
   children,
@@ -14,18 +12,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<TemplateType | null>(null);
 
   useEffect(() => {
-    console.log("entered");
-
-    getTemplate()
-      .then((e) => setData(e[0]))
-      .then(() => {
-        setTimeout(() => {
-          setLoading(false);
-        }, 5000);
-      });
+    const timer = setTimeout(() => setLoading(false), 1200);
+    return () => clearTimeout(timer);
   }, []);
   return (
     <html lang="en" className="scroll-smooth transition-all bg-black">
@@ -33,19 +23,21 @@ export default function RootLayout({
         <title>Christos Uster Biswas</title>
       </head>
       <body className={`w-full relative`}>
+        <MotionConfig reducedMotion="user">
         {loading ? (
           <Loading />
         ) : (
           <motion.main
-            initial={{ opacity: 0, y: "200" }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ ease: "easeInOut", duration: 1 }}
-            className="flex w-full relative"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.5 }}
+            className={`relative flex w-full ${spaceGrotesk.className}`}
           >
             <Navbar />
-            <dataContext.Provider value={data}>{children}</dataContext.Provider>
+            {children}
           </motion.main>
         )}
+        </MotionConfig>
       </body>
     </html>
   );

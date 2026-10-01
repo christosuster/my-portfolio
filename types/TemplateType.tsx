@@ -1,15 +1,21 @@
+export type ExperienceItem = {
+  role: string;
+  company: string;
+  period: string;
+};
+
 export type TemplateType = {
   _id: string;
-  name: string;
-  title: string;
   subtitle: string;
   aboutTitle: string;
   subtitleSkills: string;
-  intro: string;
   aboutContent: string;
   aboutContentSpan: string;
-  coreTech: string[];
-  tools: string[];
-  email: string;
+  role?: string;
+  focus?: string;
+  location?: string;
+  availability?: string;
+  experience: ExperienceItem[];
+  currently: string[];
   footer: string;
 };

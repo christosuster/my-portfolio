@@ -1,6 +1,6 @@
+import { spaceGrotesk } from "@/utils/fonts";
 import React from "react";
 import { motion } from "framer-motion";
-import { InfinitySpin } from "react-loader-spinner";
 
 const Loading = () => {
   return (
@@ -45,7 +45,9 @@ const Loading = () => {
         </div>
       </div>
 
-      <h1 className="font-light my-4 animate-pulse">Christos Uster Biswas</h1>
+      <h1 className={`${spaceGrotesk.className} my-4 text-2xl font-medium tracking-tight`}>
+        Christos Uster Biswas
+      </h1>
     </motion.div>
   );
 };

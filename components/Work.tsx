@@ -1,142 +1,133 @@
-import {
-  useScroll,
-  useSpring,
-  useTransform,
-  motion,
-  useInView,
-} from "framer-motion";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { useRef } from "react";
-import { AiOutlineGithub } from "react-icons/ai";
-import { ImArrowUpRight2 } from "react-icons/im";
-import { getWork } from "@/sanity/sanity-utils";
-import { WorkType } from "@/types/WorkType";
-import { poiret } from "@/utils/fonts";
+"use client";
 
-const Work = () => {
-  const [work, setWork] = useState<WorkType[] | null>(null);
+import GoldFigure from "@/components/ui/GoldFigure";
+import SectionHeader from "@/components/ui/SectionHeader";
+import { plexMono, spaceGrotesk } from "@/utils/fonts";
+import { WorkType } from "@/types/WorkType";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+function techOf(workTech: string) {
+  return workTech
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+const Work = ({ work }: { work: WorkType[] }) => {
+  const [active, setActive] = useState<number | null>(null);
+  const [finePointer, setFinePointer] = useState(false);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 220, damping: 28, mass: 0.35 });
+  const springY = useSpring(y, { stiffness: 220, damping: 28, mass: 0.35 });
+
   useEffect(() => {
-    getWork().then((e) => setWork(e));
+    const media = window.matchMedia("(pointer: fine)");
+    const update = () => setFinePointer(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
   }, []);
 
-  const ref = useRef(null);
-  const workRef = useRef(null);
-  const workInView = useInView(workRef, { once: false });
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["end end", "start start"],
-  });
+  const preview = active === null ? null : work[active];
 
-  const y = useTransform(scrollYProgress, [0, 1], [3, 10]);
-  const ySpringy = useSpring(y, {
-    stiffness: 95,
-    damping: 30,
-    restDelta: 0.001,
-  });
-  const x = useTransform(scrollYProgress, [0, 1], [0.1, 1]);
-  const xSpringy = useSpring(x, {
-    stiffness: 95,
-    damping: 30,
-    restDelta: 0.001,
-  });
   return (
-    <div id="work" className="  text-white w-full min-h-screen overflow-hidden">
-      <div className="px-20">
-        <div
-          ref={ref}
-          className={` w-full  h-[200px] flex flex-col justify-end md:items-start items-center  ${poiret.className} `}
-        >
-          <motion.h1
-            className="leading-[13px] md:origin-bottom-left origin-bottom md:text-sm text-[10px] "
-            style={{ scale: ySpringy }}
-          >
-            Work
-          </motion.h1>
-        </div>
-        <motion.hr
-          style={{ scaleX: xSpringy }}
-          className="bg-theme h-[2px] border-transparent w-full origin-right"
+    <section
+      id="work"
+      className="min-h-screen w-full overflow-hidden text-white"
+      onMouseMove={(event) => {
+        if (!finePointer) return;
+        x.set(event.clientX);
+        y.set(event.clientY);
+      }}
+    >
+      <div className="px-6 md:px-12 lg:px-20">
+        <SectionHeader
+          label="Work"
+          aside={
+            <p className={`${plexMono.className} pb-1 text-[11px] uppercase tracking-[0.18em] text-white/55`}>
+              {String(work.length).padStart(2, "0")} projects
+            </p>
+          }
         />
       </div>
 
-      <div className="w-full border-y-2 border-theme my-32 grid grid-cols-1 divide-y-2">
-        {work?.map((e, i) => {
+      <ol className="my-10 border-t border-white/15 md:my-16">
+        {work.map((project, index) => {
+          const meta = [project.year, project.role].filter(Boolean).join("  ·  ");
+          const tech = techOf(project.workTech);
+
           return (
-            <motion.div
-              key={i}
-              whileHover={{
-                backgroundImage: `linear-gradient(0deg,
-                #bb8f06 0%,
-                #bb8f06 50%,
-                #bb8f06 75%,
-                #bb8f06 100%,
-                black 100%)`,
-                backgroundPositionY: "-200%",
-                transition: {duration: 0.5},
-              }}
-              className="transition-colors border-theme py-5 flex flex-col justify-center items-center lg:flex-row lg:justify-between px-6 lg:px-20 gap-4 relative"
-            >
-              <a target="_blank"
-                 href={e.live} className="absolute w-full h-full top-0 left-0 z-10"></a>
+            <li key={project._id}>
+              <Link
+                href={`/work/${project.slug}`}
+                onMouseEnter={() => setActive(index)}
+                onMouseLeave={() => setActive(null)}
+                onFocus={() => setActive(index)}
+                onBlur={() => setActive(null)}
+                className="group grid gap-4 border-b border-white/15 px-6 py-8 transition-colors duration-300 hover:bg-white/[0.03] focus-visible:bg-white/[0.03] md:px-12 lg:grid-cols-[4.5rem_minmax(0,1fr)_16rem_2rem] lg:items-center lg:gap-8 lg:px-20 lg:py-10"
+              >
+                <span
+                  className={`${plexMono.className} text-sm tabular-nums tracking-[0.14em] text-white/45 transition-colors duration-300 group-hover:text-theme`}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
 
-                <div className={` w-full mx-auto relative`}>
-
-                  <div className="flex flex-col w-full items-end lg:justify-start lg:flex-row">
-                    <h1
-                      className={`${poiret.className} flex-shrink-0 xl:text-[100px] lg:text-7xl md:text-6xl text-5xl text-center lg:text-left mx-auto lg:mx-0 leading-[1]`}
-                    >
-                      {e.title}
-                    </h1>
-                    <h1
-                      className={`${poiret.className} pl-3 lg:pl-6 text-sm lg:text-lg xl:text-xl leading-[3] lg:leading-[1] text-center lg:text-left mx-auto lg:mx-0`}
-                    >
-                      / {e.subtitle}
-                    </h1>
-                  </div>
-
-                  <ImArrowUpRight2 className="absolute right-0 top-0 text-2xl"/>
-
-                  <h1
-                    className="mx-auto lg:mx-0 max-w-[800px] mt-5 lg:text-xl text-center lg:text-left text-sm !leading-[1.1]">
-                    {e.description}
-                  </h1>
-
-            </div>
-
-          <div className="flex flex-col justify-center items-center text-xs lg:items-end lg:w-1/5">
-            <h1 className=" underline underline-offset-4 leading-5 text-right">
-                  {e.workTech}
-                </h1>
-                <div className="flex gap-3">
-                  {e.client && (
-                    <Link
-                      target="_blank"
-                      href={e.client}
-                      className="flex justify-center items-center gap-1 leading-[0] mt-4 text-xl  bg-yellow-400/70 drop-shadow-lg text-black rounded-3xl p-2 hover:bg-white transition-all z-20"
-                    >
-                      <AiOutlineGithub />
-                      Client
-                    </Link>
-                  )}
-                  {e.server && (
-                    <Link
-                      target="_blank"
-                      href={e.server}
-                      className="flex justify-center items-center gap-1 leading-[0] mt-4 text-xl bg-yellow-400/70 drop-shadow-lg text-black rounded-3xl p-2 hover:bg-white transition-all z-20"
-                    >
-                      <AiOutlineGithub />
-                      Server
-                    </Link>
+                <div className="min-w-0">
+                  <h3
+                    className={`${spaceGrotesk.className} text-4xl font-medium leading-none tracking-tight transition-colors duration-300 group-hover:text-theme md:text-5xl`}
+                  >
+                    {project.title}
+                  </h3>
+                  {project.subtitle && (
+                    <p className="mt-3 max-w-[46ch] text-base text-white/65">{project.subtitle}</p>
                   )}
                 </div>
-              </div>
 
-            </motion.div>
+                <div className={`${plexMono.className} text-xs leading-relaxed lg:text-right`}>
+                  {meta && <p className="uppercase tracking-[0.14em] text-white/55">{meta}</p>}
+                  {tech.length > 0 && (
+                    <p className={`normal-case tracking-normal text-white/70 ${meta ? "mt-2" : ""}`}>
+                      {tech.join(" · ")}
+                    </p>
+                  )}
+                </div>
+
+                <span className="hidden text-theme transition-transform duration-300 group-hover:translate-x-1 lg:block">
+                  →
+                </span>
+              </Link>
+            </li>
           );
         })}
-      </div>
-    </div>
+      </ol>
+
+      {finePointer && preview && (
+        <motion.div
+          className="pointer-events-none fixed z-50 hidden h-40 w-60 -translate-x-1/2 -translate-y-[130%] overflow-hidden border border-white/10 lg:block"
+          style={{ left: springX, top: springY }}
+        >
+          {preview.cover?.url ? (
+            <Image
+              src={preview.cover.url}
+              alt=""
+              fill
+              sizes="240px"
+              className="object-cover"
+            />
+          ) : (
+            <GoldFigure
+              initial={preview.title}
+              index={String((active ?? 0) + 1).padStart(2, "0")}
+              className="h-full w-full"
+            />
+          )}
+        </motion.div>
+      )}
+    </section>
   );
 };
 
