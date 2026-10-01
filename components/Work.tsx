@@ -107,7 +107,7 @@ const Work = ({ work }: { work: WorkType[] }) => {
 
       {finePointer && preview && (
         <motion.div
-          className="pointer-events-none fixed z-50 hidden h-40 w-60 -translate-x-1/2 -translate-y-[130%] overflow-hidden border border-white/10 lg:block"
+          className="pointer-events-none fixed z-50 hidden aspect-[16/9] w-72 -translate-x-1/2 -translate-y-[130%] overflow-hidden border border-white/10 lg:block"
           style={{ left: springX, top: springY }}
         >
           {preview.cover?.url ? (
@@ -116,7 +116,7 @@ const Work = ({ work }: { work: WorkType[] }) => {
               alt=""
               fill
               sizes="240px"
-              className="object-cover"
+              className="object-contain"
             />
           ) : (
             <GoldFigure

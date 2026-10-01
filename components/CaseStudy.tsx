@@ -6,10 +6,8 @@ import GoldFigure from "@/components/ui/GoldFigure";
 import { MaskWords } from "@/components/ui/MaskLines";
 import { plexMono, spaceGrotesk } from "@/utils/fonts";
 import { WorkType } from "@/types/WorkType";
-import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
 
 const sections = [
   { key: "context", label: "Context" },
@@ -224,29 +222,20 @@ export default function CaseStudy({
 }
 
 function Cover({ work }: { work: WorkType }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
-
   if (!work.cover?.url) {
     return <GoldFigure initial={work.title} index={work.year} className="mt-16 aspect-[16/9]" />;
   }
 
   return (
-    <div ref={ref} className="relative mt-16 aspect-[16/9] overflow-hidden">
-      <motion.div style={{ y }} className="absolute inset-x-0 -top-[8%] h-[116%]">
-        <Image
-          src={work.cover.url}
-          alt=""
-          fill
-          priority
-          sizes="(min-width: 1024px) 75vw, 100vw"
-          className="object-cover"
-        />
-      </motion.div>
+    <div className="relative mt-16 aspect-[16/9] overflow-hidden">
+      <Image
+        src={work.cover.url}
+        alt=""
+        fill
+        priority
+        sizes="(min-width: 1024px) 75vw, 100vw"
+        className="object-contain"
+      />
     </div>
   );
 }
