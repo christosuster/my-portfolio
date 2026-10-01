@@ -22,7 +22,7 @@ export default function SectionHeader({
     <div>
       <div
         ref={ref}
-        className="flex h-[200px] w-full items-end justify-between gap-6"
+        className="flex h-[150px] w-full items-end justify-between gap-6"
       >
         <h2
           className={`${spaceGrotesk.className} text-5xl font-medium leading-none tracking-tight md:text-6xl`}

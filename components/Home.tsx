@@ -31,10 +31,10 @@ const Home = ({ data }: { data: TemplateType | null }) => {
       id="home"
       className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-6 text-white md:px-20"
     >
-      <motion.div style={{ opacity }} className="pt-10 text-center">
+      <motion.div style={{ opacity }} className="w-full min-w-0 pt-10 text-center">
         <motion.div initial="hidden" animate="visible" variants={nameBlock}>
           <div
-            className={`text-center text-[15vh] font-medium uppercase leading-[0.78] tracking-[-0.045em] md:text-[12vw] lg:text-[11vw] ${spaceGrotesk.className}`}
+            className={`text-center text-[clamp(2.5rem,18vw,15vh)] font-medium uppercase leading-[0.78] tracking-[-0.045em] md:text-[12vw] lg:text-[11vw] ${spaceGrotesk.className}`}
           >
             {["Christos", "Uster", "Biswas"].map((line) => (
               <span key={line} className="block overflow-hidden">

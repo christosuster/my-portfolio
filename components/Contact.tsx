@@ -92,7 +92,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             onChange={(e) => {
               setName(e.target.value);
             }}
-            className="placeholder-white/40 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors"
+            className="placeholder-white/40 bg-transparent my-4 border-b-2 border-white overflow-y-auto md:w-[500px] w-full focus-visible:border-theme p-2 outline-none transition-colors"
           />
           <input
             type="email"
@@ -103,7 +103,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-            className="placeholder-white/40 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors"
+            className="placeholder-white/40 bg-transparent my-4 border-b-2 border-white overflow-y-auto md:w-[500px] w-full focus-visible:border-theme p-2 outline-none transition-colors"
           />
           <input
             type="text"
@@ -114,7 +114,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             onChange={(e) => {
               setSubject(e.target.value);
             }}
-            className="placeholder-white/40 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors"
+            className="placeholder-white/40 bg-transparent my-4 border-b-2 border-white overflow-y-auto md:w-[500px] w-full focus-visible:border-theme p-2 outline-none transition-colors"
           />
           <textarea
             name="message"
@@ -124,7 +124,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             onChange={(e) => {
               setMessage(e.target.value);
             }}
-            className="placeholder-white/40 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors h-48 resize-none"
+            className="placeholder-white/40 bg-transparent my-4 border-b-2 border-white overflow-y-auto md:w-[500px] w-full focus-visible:border-theme p-2 outline-none transition-colors h-48 resize-none"
           />
           <button
             disabled={sending ? true : false}
