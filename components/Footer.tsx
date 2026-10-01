@@ -23,16 +23,6 @@ const Footer = ({ data }: { data: TemplateType | null }) => {
         </a>
       </div>
       <p className="my-1 normal-case tracking-normal">{data?.footer}</p>
-      <p className="normal-case tracking-normal">
-        Inspired by{" "}
-        <a
-          className="underline"
-          target="_blank"
-          href="https://www.mathys-cognefoucault.fr/"
-        >
-          Mathys&apos; Website
-        </a>
-      </p>
     </footer>
   );
 };
