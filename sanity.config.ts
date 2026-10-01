@@ -11,7 +11,7 @@ const config = defineConfig([
   {
     name: "production",
     title: "Production",
-    basePath,
+    basePath: `${basePath}/production`,
     projectId,
     dataset: "production",
     apiVersion: "2023-10-06",
