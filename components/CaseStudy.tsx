@@ -131,9 +131,9 @@ export default function CaseStudy({
       })}
 
       {work.highlight && (
-        <blockquote className="mt-16 max-w-[22ch] border-l-2 border-theme pl-6 md:mt-24">
+        <blockquote className="mt-16 border-l-2 border-theme pl-6 md:mt-24 md:max-w-4xl md:pl-8">
           <p
-            className={`${spaceGrotesk.className} text-3xl font-medium leading-snug tracking-tight md:text-5xl`}
+            className={`${spaceGrotesk.className} text-2xl font-medium leading-snug tracking-tight md:text-4xl`}
           >
             {work.highlight}
           </p>
@@ -211,7 +211,7 @@ export default function CaseStudy({
             className={`${spaceGrotesk.className} mt-3 text-4xl font-medium tracking-tight transition-colors group-hover:text-theme md:text-6xl`}
           >
             {next.title}{" "}
-            <span className="inline-block text-theme transition-transform duration-300 group-hover:translate-x-2">
+            <span className="inline-block text-5xl leading-none text-theme transition-transform duration-300 group-hover:translate-x-2 md:text-7xl">
               →
             </span>
           </p>

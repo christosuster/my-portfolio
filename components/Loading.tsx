@@ -18,7 +18,7 @@ const Loading = () => {
                 rotate: [90, 180, 270, 360, 450],
               }}
               transition={{
-                duration: 3.6,
+                duration: 3.5,
                 ease: "circIn",
                 repeat: Infinity,
                 repeatDelay: 2,
@@ -30,7 +30,7 @@ const Loading = () => {
             <motion.img
               animate={{ rotate: [0, 90, 180, 270, 360] }}
               transition={{
-                duration: 3.6,
+                duration: 3.5,
                 ease: "circIn",
                 repeat: Infinity,
                 repeatDelay: 2,

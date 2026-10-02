@@ -68,7 +68,7 @@ const Work = ({ work }: { work: WorkType[] }) => {
                 onMouseLeave={() => setActive(null)}
                 onFocus={() => setActive(index)}
                 onBlur={() => setActive(null)}
-                className="group grid gap-4 border-b border-white/15 px-6 py-8 transition-colors duration-300 hover:bg-white/[0.03] focus-visible:bg-white/[0.03] md:px-12 lg:grid-cols-[4.5rem_minmax(0,1fr)_16rem_2rem] lg:items-center lg:gap-8 lg:px-20 lg:py-10"
+                className="group grid gap-4 border-b border-white/15 px-6 py-8 transition-colors duration-300 hover:bg-white/[0.03] focus-visible:bg-white/[0.03] md:px-12 lg:grid-cols-[4.5rem_minmax(0,1fr)_16rem_3.5rem] lg:items-center lg:gap-8 lg:px-20 lg:py-10"
               >
                 <span
                   className={`${plexMono.className} text-sm tabular-nums tracking-[0.14em] text-white/45 transition-colors duration-300 group-hover:text-theme`}
@@ -96,7 +96,7 @@ const Work = ({ work }: { work: WorkType[] }) => {
                   )}
                 </div>
 
-                <span className="hidden text-theme transition-transform duration-300 group-hover:translate-x-1 lg:block">
+                <span className="hidden text-3xl leading-none text-theme transition-transform duration-300 group-hover:translate-x-1.5 lg:block lg:text-4xl">
                   →
                 </span>
               </Link>
