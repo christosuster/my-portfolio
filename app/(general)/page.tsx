@@ -1,23 +1,23 @@
-"use client";
 import About from "@/components/About";
-import Home from "@/components/Home";
-import Work from "@/components/Work";
-import { comfortaa } from "@/utils/fonts";
-import { dataContext } from "@/utils/context";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import { useContext } from "react";
+import Home from "@/components/Home";
+import Work from "@/components/Work";
+import { getTemplate, getWork } from "@/sanity/sanity-utils";
+import { spaceGrotesk } from "@/utils/fonts";
 
-export default function HomePage() {
-  const data = useContext(dataContext);
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const [data, work] = await Promise.all([getTemplate(), getWork()]);
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between w-full md:w-[96%] ${comfortaa.className}  bg-black`}
+      className={`flex min-h-screen w-full flex-col items-center justify-between bg-black md:w-[96%] ${spaceGrotesk.className}`}
     >
       <Home data={data} />
       <About data={data} />
-      <Work />
+      <Work work={work} />
       <Contact data={data} />
       <Footer data={data} />
     </main>

@@ -1,13 +1,9 @@
-import { poiret } from "@/utils/fonts";
+"use client";
+
+import SectionHeader from "@/components/ui/SectionHeader";
 import { TemplateType } from "@/types/TemplateType";
-import {
-  useInView,
-  useScroll,
-  useSpring,
-  useTransform,
-  motion,
-} from "framer-motion";
-import React, { FormEvent, ReactHTMLElement, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import React, { FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Contact = ({ data }: { data: TemplateType | null }) => {
@@ -18,10 +14,8 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
   const [message, setMessage] = useState<string>("");
   const [sending, setSending] = useState(false);
 
-  const ref = useRef(null);
-  const contactForm = useRef<any>(null);
-  const errorRef = useRef<any>(null);
-  const buttonRef = useRef<any>(null);
+  const errorRef = useRef<HTMLHeadingElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -54,10 +48,9 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
 
       if (result.success) {
         errorRef.current?.classList.add("invisible");
-        buttonRef.current.innerHTML = "Email Sent!";
+        if (buttonRef.current) buttonRef.current.innerHTML = "Email Sent!";
         setTimeout(() => {
-          buttonRef.current.innerHTML = "Submit";
-          buttonRef.current;
+          if (buttonRef.current) buttonRef.current.innerHTML = "Submit";
         }, 4000);
       }
       setSending(false);
@@ -65,58 +58,24 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
     router.push("#contact");
   };
 
-  const formInView = useInView(contactForm, { once: true });
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["end end", "start start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [3, 10]);
-  const ySpringy = useSpring(y, {
-    stiffness: 95,
-    damping: 30,
-    restDelta: 0.001,
-  });
-  const x = useTransform(scrollYProgress, [0, 1], [0.1, 1]);
-  const xSpringy = useSpring(x, {
-    stiffness: 95,
-    damping: 30,
-    restDelta: 0.001,
-  });
   return (
     <div
       id="contact"
-      className="min-h-screen px-20 md:px-20 text-white w-full overflow-hidden"
+      className="min-h-screen w-full overflow-hidden px-6 text-white md:px-12 lg:px-20"
     >
-      <div
-        ref={ref}
-        className={` w-full  h-[200px] flex flex-col justify-end md:items-start items-center ${poiret.className} `}
-      >
-        <motion.h1
-          className="leading-[13px] md:origin-bottom-left origin-bottom md:text-sm text-[10px]"
-          style={{ scale: ySpringy }}
-        >
-          Contact
-        </motion.h1>
-      </div>
-      <motion.hr
-        style={{ scaleX: xSpringy }}
-        className="bg-theme h-[2px] border-transparent w-full origin-right"
-      />
+      <SectionHeader label="Contact" />
       <div className="my-24">
         <h1
           ref={errorRef}
-          className="invisible text-red-500 text-center animate-bounce"
+          className="invisible text-red-500 text-center"
         >
-          PLEASE FILL IN ALL THE FIELDS
+          Please fill in all the fields
         </h1>
-        <form
-          ref={contactForm}
-          style={{
-            opacity: formInView ? 1 : 0,
-            transform: formInView ? "none" : "translateY(200px)",
-            transition: "linear 0.5s",
-          }}
+        <motion.form
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="flex flex-col justify-center items-center *>"
         >
           <input
@@ -133,7 +92,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             onChange={(e) => {
               setName(e.target.value);
             }}
-            className="placeholder-gray-500 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors"
+            className="placeholder-white/40 bg-transparent my-4 border-b-2 border-white overflow-y-auto md:w-[500px] w-full focus-visible:border-theme p-2 outline-none transition-colors"
           />
           <input
             type="email"
@@ -144,7 +103,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-            className="placeholder-gray-500 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors"
+            className="placeholder-white/40 bg-transparent my-4 border-b-2 border-white overflow-y-auto md:w-[500px] w-full focus-visible:border-theme p-2 outline-none transition-colors"
           />
           <input
             type="text"
@@ -155,7 +114,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             onChange={(e) => {
               setSubject(e.target.value);
             }}
-            className="placeholder-gray-500 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors"
+            className="placeholder-white/40 bg-transparent my-4 border-b-2 border-white overflow-y-auto md:w-[500px] w-full focus-visible:border-theme p-2 outline-none transition-colors"
           />
           <textarea
             name="message"
@@ -165,7 +124,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
             onChange={(e) => {
               setMessage(e.target.value);
             }}
-            className="placeholder-gray-500 bg-transparent my-4 border-b-2 border-theme overflow-y-auto md:w-[500px] w-full focus-visible:border-white p-2 outline-none transition-colors h-48 resize-none"
+            className="placeholder-white/40 bg-transparent my-4 border-b-2 border-white overflow-y-auto md:w-[500px] w-full focus-visible:border-theme p-2 outline-none transition-colors h-48 resize-none"
           />
           <button
             disabled={sending ? true : false}
@@ -175,7 +134,7 @@ const Contact = ({ data }: { data: TemplateType | null }) => {
           >
             Submit
           </button>
-        </form>
+        </motion.form>
       </div>
     </div>
   );

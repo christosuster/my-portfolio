@@ -4,11 +4,6 @@ export const template = {
   type: "document",
   fields: [
     {
-      name: "title",
-      title: "Site Title",
-      type: "string",
-    },
-    {
       name: "subtitle",
       title: "Site Subtitle",
       type: "string",
@@ -16,11 +11,6 @@ export const template = {
     {
       name: "subtitleSkills",
       title: "Site Skills",
-      type: "string",
-    },
-    {
-      name: "intro",
-      title: "Introduction",
       type: "string",
     },
     {
@@ -39,29 +29,45 @@ export const template = {
       type: "string",
     },
     {
-      name: "coreTech",
-      title: "Core Tech",
-      type: "array",
-      of: [
-        {
-          type: "string",
-        },
-      ],
-    },
-    {
-      name: "tools",
-      title: "Tools",
-      type: "array",
-      of: [
-        {
-          type: "string",
-        },
-      ],
-    },
-    {
-      name: "email",
-      title: "Email",
+      name: "role",
+      title: "Role",
       type: "string",
+    },
+    {
+      name: "focus",
+      title: "Focus",
+      type: "string",
+    },
+    {
+      name: "location",
+      title: "Location",
+      type: "string",
+    },
+    {
+      name: "availability",
+      title: "Availability",
+      type: "string",
+    },
+    {
+      name: "experience",
+      title: "Experience",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "role", title: "Role", type: "string" },
+            { name: "company", title: "Company", type: "string" },
+            { name: "period", title: "Period", type: "string" },
+          ],
+        },
+      ],
+    },
+    {
+      name: "currently",
+      title: "Currently",
+      type: "array",
+      of: [{ type: "string" }],
     },
     {
       name: "footer",

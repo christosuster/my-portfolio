@@ -1,142 +1,128 @@
-import React, { useRef } from "react";
-import "react-tooltip/dist/react-tooltip.css";
-import {
-  motion,
-  useInView,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "framer-motion";
-import { poiret } from "@/utils/fonts";
-import { Tooltip } from "react-tooltip";
+"use client";
+
+import SectionHeader from "@/components/ui/SectionHeader";
+import { MaskWords } from "@/components/ui/MaskLines";
+import { plexMono, spaceGrotesk } from "@/utils/fonts";
 import { TemplateType } from "@/types/TemplateType";
+import { motion, Variants } from "framer-motion";
+
+const rise: Variants = {
+  hidden: { y: "110%" },
+  visible: { y: "0%", transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } },
+};
+
+const stagger: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.06 } },
+};
 
 const About = ({ data }: { data: TemplateType | null }) => {
-  const ref = useRef(null);
-  const aboutMe = useRef(null);
-  const aboutInView = useInView(aboutMe, { once: true });
-  const skills = useRef(null);
-  const skillsInView = useInView(skills, { once: true });
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["end end", "start start"],
-  });
+  const facts = [
+    data?.role ? { label: "Role", value: data.role } : null,
+    data?.focus ? { label: "Focus", value: data.focus } : null,
+    data?.location ? { label: "Location", value: data.location } : null,
+    data?.availability ? { label: "Availability", value: data.availability } : null,
+  ].filter((item): item is { label: string; value: string } => item !== null);
 
-  const y = useTransform(scrollYProgress, [0, 1], [3, 10]);
-  const ySpringy = useSpring(y, {
-    stiffness: 95,
-    damping: 30,
-    restDelta: 0.001,
-  });
-  const x = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const xSpringy = useSpring(x, {
-    stiffness: 95,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  const experience = data?.experience ?? [];
+  const currently = data?.currently ?? [];
 
   return (
-    <div
-      id="about"
+    <section id="about" className="w-full overflow-hidden px-6 text-white md:px-12 lg:px-20">
+      <SectionHeader label="About" />
 
-      className="px-20 md:px-20 text-white w-full overflow-hidden"
-    >
-      <div
-        ref={ref}
-        className={` w-full h-[200px] flex flex-col justify-end md:items-start items-center ${poiret.className} `}
-      >
-        <motion.h1
-          className="leading-[13px] md:origin-bottom-left origin-bottom md:text-sm text-[10px] "
-          style={{ scale: ySpringy }}
-        >
-          About
-        </motion.h1>
-      </div>
-      <motion.hr
-        style={{ scaleX: xSpringy }}
-        className="bg-theme h-[2px] border-transparent w-full origin-right"
-      />
-
-      <div className="my-32 lg:px-20text-left">
-        <div className="flex w-full md:flex-row-reverse gap-10 flex-col">
-          <div
-            className="md:w-1/2 mb-16"
-            ref={aboutMe}
-            style={{
-              opacity: aboutInView ? 1 : 0,
-              transform: aboutInView ? "none" : "translateY(200px)",
-              transition: "linear 0.5s",
-            }}
+      <div className="my-16 lg:my-24">
+        {data?.aboutTitle && (
+          <h3
+            className={`${spaceGrotesk.className} max-w-[18ch] text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl`}
           >
-            <h1 className={`${poiret.className} text-4xl my-4`}>
-              {data?.aboutTitle}
-            </h1>
-            <div className="lg:w-5/6 xl:w-3/4">
-              <h1 className="leading-5">
-                {data?.aboutContent}{" "}
-                <span
-                  className="italic text-yellow-200 cursor-pointer select-none"
-                  id="clickable"
-                >
-                  {data?.aboutContentSpan}
-                </span>
-              </h1>
+            <MaskWords text={data.aboutTitle} />
+          </h3>
+        )}
 
-              <Tooltip
-                className=" w-full "
-                anchorSelect="#clickable"
-                variant="warning"
-                delayHide={1000}
+        {facts.length > 0 && (
+          <motion.dl
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
+            variants={stagger}
+            className="mt-12 grid border-y border-white/15 sm:grid-cols-2 lg:grid-cols-4"
+          >
+            {facts.map((fact) => (
+              <div
+                key={fact.label}
+                className="overflow-hidden border-b border-white/15 py-5 last:border-b-0 sm:px-6 sm:odd:border-r sm:[&:nth-child(n+3)]:border-b-0 lg:border-b-0 lg:border-r lg:px-8 lg:first:pl-0 lg:last:border-r-0 lg:[&:nth-child(n+3)]:border-b-0"
               >
-                <button className="text-black font-bold">Sleeping :3</button>
-              </Tooltip>
-            </div>
+                <motion.div variants={rise}>
+                  <dt className={`${plexMono.className} text-[11px] uppercase tracking-[0.18em] text-white/55`}>
+                    {fact.label}
+                  </dt>
+                  <dd className="mt-2 text-base leading-relaxed text-white/90">{fact.value}</dd>
+                </motion.div>
+              </div>
+            ))}
+          </motion.dl>
+        )}
+
+        <div className="mt-16 grid gap-16 md:grid-cols-12">
+          <div className="md:col-span-7">
+            {(data?.aboutContent || data?.aboutContentSpan) && (
+              <p className="max-w-[62ch] text-base font-light leading-relaxed text-white/85 md:text-lg">
+                {data?.aboutContent}
+                {data?.aboutContent && data?.aboutContentSpan ? " " : null}
+                {data?.aboutContentSpan && (
+                  <span className="text-theme">{data.aboutContentSpan}</span>
+                )}
+              </p>
+            )}
           </div>
 
-          <div
-            className="md:w-1/2 md:border-0 border-y-2 border-theme"
-            ref={skills}
-            style={{
-              opacity: skillsInView ? 1 : 0,
-              transform: skillsInView ? "none" : "translateY(200px)",
-              transition: "linear 0.5s",
-            }}
-          >
-            <div className="lg:w-3/4 mb-10">
-              <h1 className={`${poiret.className} text-4xl my-4`}>Core Tech</h1>
-              <div className="flex flex-wrap flex-row gap-2 ">
-                {data?.coreTech?.map((e, i) => {
-                  return (
-                    <h1
-                      key={i}
-                      className="border-[2px] border-theme w-fit px-3 py-[2px] rounded-3xl"
-                    >
-                      {e}
-                    </h1>
-                  );
-                })}
-              </div>
+          {currently.length > 0 && (
+            <div className="md:col-span-4 md:col-start-9">
+              <p className={`${plexMono.className} text-[11px] uppercase tracking-[0.18em] text-white/55`}>
+                Currently
+              </p>
+              <ul className="mt-4 border-t border-white/15">
+                {currently.map((item) => (
+                  <li
+                    key={item}
+                    className="border-b border-white/15 py-3 text-base leading-relaxed text-white/85"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
-
-            <div className="lg:w-3/4 mb-10 ">
-              <h1 className={`${poiret.className} text-4xl my-4`}>Tools</h1>
-              <div className="flex flex-wrap flex-row gap-2 ">
-                {data?.tools?.map((e, i) => {
-                  return (
-                    <h1
-                      key={i}
-                      className="border-[2px] border-theme w-fit px-3 py-[2px] rounded-3xl"
-                    >
-                      {e}
-                    </h1>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+          )}
         </div>
+
+        {experience.length > 0 && (
+          <div className="mt-20">
+            <p className={`${plexMono.className} text-[11px] uppercase tracking-[0.18em] text-white/55`}>
+              Experience
+            </p>
+            <ol className="mt-4 border-t border-white/15">
+              {experience.map((item) => (
+                <li
+                  key={`${item.period}-${item.company}-${item.role}`}
+                  className="grid gap-2 border-b border-white/15 py-6 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-10"
+                >
+                  <p className={`${plexMono.className} text-xs uppercase tracking-[0.16em] text-theme`}>
+                    {item.period}
+                  </p>
+                  <div>
+                    <p className={`${spaceGrotesk.className} text-xl font-medium tracking-tight`}>
+                      {item.role}
+                    </p>
+                    {item.company && <p className="mt-1 text-white/70">{item.company}</p>}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,10 +1,9 @@
 "use client";
-import { comfortaa, poiret } from "@/utils/fonts";
+import { plexMono } from "@/utils/fonts";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { motion } from "framer-motion";
-
 const navLinks = [
   // { name: "Home", id: "home" },
   { name: "About", id: "about" },
@@ -47,13 +46,13 @@ const Navbar = () => {
       {smallScreen ? (
         <nav
           className={`${
-            poiret.className
+            plexMono.className
           } fixed z-10 w-screen h-screen overflow-hidden top-0 left-0  justify-center items-center bg-black text-white  flex-col gap-3 ${
             menuIsOpen ? "flex" : "hidden"
           }`}
         >
           <Link
-            href={"#home"}
+            href={"/#home"}
             className=""
             onClick={() => {
               setMenuIsOpen(false);
@@ -97,7 +96,7 @@ const Navbar = () => {
               <Link
                 className="text-3xl py-5 hover:underline hover:text-theme "
                 key={item.id}
-                href={`#${item.id}`}
+                href={`/#${item.id}`}
                 onClick={() => {
                   setMenuIsOpen(false);
                 }}
@@ -109,9 +108,9 @@ const Navbar = () => {
         </nav>
       ) : (
         <nav
-          className={`${poiret.className} w-20 flex flex-col text-lg font-thin justify-between bg-black border-r-[1px] border-white h-screen py-10 sticky top-0 left-0 text-white`}
+          className={`${plexMono.className} sticky left-0 top-0 flex h-screen w-20 flex-col justify-between border-r-[1px] border-white bg-black py-10 text-sm uppercase tracking-[0.14em] text-white`}
         >
-          <Link href={"#home"} className="">
+          <Link href={"/#home"} className="">
             <div className="  border-white grid grid-cols-2 gap-[6px] items-center group justify-center">
               <div className="justify-items-end grid grid-cols-1 gap-[4px]">
                 <motion.img
@@ -150,7 +149,7 @@ const Navbar = () => {
               <Link
                 className="mx-auto group w-full flex justify-center items-center flex-col hover:font-bold"
                 key={item.id}
-                href={`#${item.id}`}
+                href={`/#${item.id}`}
               >
                 {item.name.split("").map((letter, i) => {
                   return (
